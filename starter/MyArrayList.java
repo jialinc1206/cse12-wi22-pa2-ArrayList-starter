@@ -1,10 +1,8 @@
 /**
- * TODO: Add your file header
- * Name:
- * ID:
- * Email:
- * Sources used: Put "None" if you did not have any external help
- * Some example of sources used would be Tutors, Zybooks, and Lecture Slides
+ * Name: Jialin Chen
+ * ID: A16636887
+ * Email: jic0532ucsd.edu
+ * Sources used: None
  * 
  * 2-4 sentence file description here
  */
