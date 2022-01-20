@@ -1,12 +1,12 @@
 /**
- * TODO: Add your file header
- * Name:
- * ID:
- * Email:
- * Sources used: Put "None" if you did not have any external help
- * Some example of sources used would be Tutors, Zybooks, and Lecture Slides
+ * Name: Jialin Chen
+ * ID: A16636887
+ * Email: jic053@ucsd.edu
+ * Sources used: None
  * 
- * 2-4 sentence file description here
+ * This is a test file that contains various unit tests for MyArrayList.java
+ * It has implemented tests that check if MyArrayList.java could correctly
+ * handle special cases.
  */
 
  //IMPORTANT: Do not change the headers!
@@ -15,7 +15,18 @@ import static org.junit.Assert.*;
 
 import org.junit.*;
 
+@SuppressWarnings("unchecked")
 public class MyArrayListHiddenTester {
+
+    static final int DEFAULT_CAPACITY = 5;
+    static final int MY_CAPACITY = 3;
+    static final int INVALID_ARG = -1;
+
+    Object[] arr = new Object[10];
+    Integer[] arrInts = { 1, 2, 3 };
+    Object[] NULL_ARG;
+
+    private MyArrayList listInt;
 
     /**
      * This sets up the test fixture. JUnit invokes this method before
@@ -23,7 +34,7 @@ public class MyArrayListHiddenTester {
      * before each test */
     @Before
     public void setUp() throws Exception {
-        
+        listInt = new MyArrayList<Integer>(arrInts);
     }
 
     /**
@@ -32,7 +43,14 @@ public class MyArrayListHiddenTester {
      */
     @Test
     public void testConstructorInvalidArg(){
-        
+        int outPut = 0;
+        try{
+            MyArrayList test = new MyArrayList(INVALID_ARG);
+        }
+        catch(IllegalArgumentException e){
+            outPut = -1;
+        }
+        assertEquals(-1, outPut);
     }
 
     /**
@@ -41,7 +59,10 @@ public class MyArrayListHiddenTester {
      */
     @Test
     public void testConstructorNullArg(){
-        
+        MyArrayList list = new MyArrayList(NULL_ARG);
+
+        assertEquals(0, list.size);
+        assertEquals(5, list.getCapacity());
     }
 
     /**
@@ -50,7 +71,12 @@ public class MyArrayListHiddenTester {
      */
     @Test
     public void testAppendAtCapacity(){
-        
+        listInt.append(4);
+
+        assertEquals(4, listInt.size);
+        assertEquals(6, listInt.getCapacity());
+        assertEquals(4, listInt.get(3));
+        assertEquals(1, listInt.get(0));
     }
 
     /**
@@ -60,7 +86,12 @@ public class MyArrayListHiddenTester {
      */
     @Test
     public void testPrependNull(){
-        
+        listInt.prepend(null);
+
+        assertEquals(4, listInt.size);
+        assertEquals(6, listInt.getCapacity());
+        assertEquals(null, listInt.get(0));
+        assertEquals(3, listInt.get(3));
     }
     
     /**
@@ -68,7 +99,22 @@ public class MyArrayListHiddenTester {
      */
     @Test
     public void testInsertOutOfBound(){
-       
+        int outPut1 = 0;
+        int outPut2 = 0;
+       try{
+           listInt.insert(-1, 4);
+       }
+       catch(IndexOutOfBoundsException e){
+            outPut1 = -10;
+       }
+       try{
+        listInt.insert(4, 4);
+       }
+       catch(IndexOutOfBoundsException e){
+            outPut2 = -11;
+       }
+       assertEquals(-10, outPut1);
+       assertEquals(-11, outPut2);
     }
 
     /**
@@ -78,7 +124,11 @@ public class MyArrayListHiddenTester {
      */
     @Test
     public void testInsertMultiple(){
-        
+        for(int i = 0; i < 1000; i++){
+            listInt.insert(1,i);
+        }
+        assertEquals(1003, listInt.size);
+        assertEquals(1536, listInt.getCapacity());
     }
 
     /**
@@ -86,7 +136,22 @@ public class MyArrayListHiddenTester {
      */
     @Test
     public void testGetOutOfBound(){
-        
+        int outPut1 = 0;
+        int outPut2 = 0;
+        try{
+            listInt.get(-1);
+        }
+        catch(IndexOutOfBoundsException e){
+            outPut1 = -10;
+        }
+        try{
+            listInt.get(3);
+        }
+        catch(IndexOutOfBoundsException e){
+            outPut2 = -11;
+        }
+        assertEquals(-10, outPut1);
+        assertEquals(-11, outPut2);
     }
 
     /**
@@ -94,7 +159,22 @@ public class MyArrayListHiddenTester {
      */
     @Test
     public void testSetOutOfBound(){
-        
+        int outPut1 = 0;
+        int outPut2 = 0;
+        try{
+            listInt.set(-1,4);
+        }
+        catch(IndexOutOfBoundsException e){
+            outPut1 = -10;
+        }
+        try{
+            listInt.set(3,4);
+        }
+        catch(IndexOutOfBoundsException e){
+            outPut2 = -11;
+        }
+        assertEquals(-10, outPut1);
+        assertEquals(-11, outPut2);
     }
 
 
@@ -103,7 +183,22 @@ public class MyArrayListHiddenTester {
      */
     @Test
     public void testRemoveOutOfBound(){
-        
+        int outPut1 = 0;
+        int outPut2 = 0;
+        try{
+            listInt.remove(-1);
+        }
+        catch(IndexOutOfBoundsException e){
+            outPut1 = -10;
+        }
+        try{
+            listInt.remove(3);
+        }
+        catch(IndexOutOfBoundsException e){
+            outPut2 = -11;
+        }
+        assertEquals(-10, outPut1);
+        assertEquals(-11, outPut2);
     }
 
     /**
@@ -112,7 +207,14 @@ public class MyArrayListHiddenTester {
      */
     @Test
     public void testExpandCapacitySmaller(){
-       
+        int outPut = 0;
+        try{
+            listInt.expandCapacity(2);
+        }
+        catch(IllegalArgumentException e){
+            outPut = -1;
+        }
+        assertEquals(-1, outPut);
     }
 
     /**
@@ -121,7 +223,11 @@ public class MyArrayListHiddenTester {
      */
     @Test
     public void testExpandCapacityExplode(){
+        listInt.expandCapacity(8);
         
+        assertEquals(3, listInt.size);
+        assertEquals(8, listInt.getCapacity());
+        assertEquals(1, listInt.get(0));
     }
 
 }
