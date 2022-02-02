@@ -120,7 +120,6 @@ public class MyArrayListHiddenTester {
     /**
      * Insert multiple (eg. 1000) elements sequentially beyond capacity -
      * Check reflection on size and capacity
-     * Hint: for loop could come in handy
      */
     @Test
     public void testInsertMultiple(){
